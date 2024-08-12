@@ -1,4 +1,5 @@
 import PySimpleGUI as gui
+import sqlite3
 
 def main():
 
@@ -7,6 +8,8 @@ def main():
                [gui.Text("Plot number: ")],
                [gui.InputText()],
                [gui.Text("Tenant phone number: ")],
+               [gui.InputText()],
+               [gui.Text("Enter room number: ")],
                [gui.InputText()],
                [gui.Text("Rent p/month: ")],
                [gui.InputText()],
@@ -28,6 +31,24 @@ def main():
             break
 
     print(f"Name is {values[0]}")
+
+    conn = sqlite3.connect("database1")
+    cur = conn.cursor()
+
+    #cur.execute("CREATE TABLE tenants(name, plotnumber, roomnumber, rent, startdate, enddate)")
+    res = cur.execute("SELECT name FROM sqlite_master")
+    res.fetchone()
+
+def databasecreate():
+    conn = None
+    try:
+        conn = sqlite3.connect("database1")
+        print(sqlite3.sqlite_version)
+    except sqlite3.Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close
 
 main()
     
