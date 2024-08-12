@@ -1,14 +1,6 @@
-import PySimpleGUI as gui
+import py
 
 def main():
-
-    layout = [
-
-                
-            ]
-
-
-
     name = input("Tenant name: ")
     plot = input("Plot number: ")
     number = input("Tenant phone number:")
