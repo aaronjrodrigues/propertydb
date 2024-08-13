@@ -26,19 +26,26 @@ def main():
 
     while True:
         event, values = window.read()
-
         if event == gui.WIN_CLOSED or event == "Cancel":
             break
+    
+    name = values[0]
+    plot = values[1]
+    phone = values[2]
+    room = values[3]
+    rent = values[4]
+    startdate = values[4]
+    enddate = values[5]
 
     print(f"Name is {values[0]}")
 
     conn = sqlite3.connect("database1")
     cur = conn.cursor()
 
-    #cur.execute("CREATE TABLE tenants(name, plotnumber, roomnumber, rent, startdate, enddate)")
-    res = cur.execute("SELECT name FROM sqlite_master")
-    res.fetchone()
-
+    cur.execute("CREATE TABLE IF NOT EXISTS tenants(name, plotnumber, phone, roomnumber, rent, startdate, enddate)")
+    conn.commit()
+    cur.execute(f"INSERT INTO tenants VALUES ('{name}', '{plot}', '{phone}', '{room}' , '{rent}', '{startdate}', '{enddate}')")
+    conn.commit()
 def databasecreate():
     conn = None
     try:
