@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter import ttk
 
 def main():
+    
     #layout = [ [gui.Text("What would you like to do? ")],
      #          [gui.Button("Add tenant")],
       #         [gui.Button("Check due dates")],
