@@ -5,16 +5,6 @@ from tkinter import *
 from tkinter import ttk
 
 def main():
-    
-    #layout = [ [gui.Text("What would you like to do? ")],
-     #          [gui.Button("Add tenant")],
-      #         [gui.Button("Check due dates")],
-       #        [gui.Button("Remove tenant")],
-        #       [gui.Button("Check list of tenants")]
-             #  ]
-    
-    #window = gui.Window("Choose an option", layout)
-
     root = Tk()
     root.title("Choose an option")
 
@@ -31,31 +21,12 @@ def main():
     ttk.Button(mainframe, text="View current tenants").grid(column=2, row=3)
     ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=4)
 
-
-
     root.mainloop()
-    
-
-    #while True:
-     #   event, values = window.read()
-      #  if event == gui.WIN_CLOSED:
-       #     exit()
-        #elif event == "Add tenant":
-         #   gui.sgprint_close()
-          #  addtenant()
-           # break
-       # elif event == "Check list of tenants":
-        #    gui.sgprint_close()
-         #   tenantlist()
-          #  break
 
 
 def tenantlist():
     ...
     
-        
-    
-
 def addtenant():
 
     layout = [ [gui.Text("Tenant name: ")],
