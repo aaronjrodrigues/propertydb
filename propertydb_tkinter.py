@@ -1,4 +1,3 @@
-import PySimpleGUI as gui
 import sqlite3
 
 from tkinter import *
@@ -29,45 +28,63 @@ def tenantlist():
     
 def addtenant():
 
-    layout = [ [gui.Text("Tenant name: ")],
-                [gui.InputText()],
-                [gui.Text("Plot number: ")],
-                [gui.InputText()],
-                [gui.Text("Tenant phone number: ")],
-                [gui.InputText()],
-                [gui.Text("Enter room number: ")],
-                [gui.InputText()],
-                [gui.Text("Rent p/month: ")],
-                [gui.InputText()],
-                [gui.Text("Start date (DD/MM/YYYY)")],
-                [gui.InputText()],
-                [gui.Text("End date (DD/MM/YYYY)")],
-                [gui.InputText()],
-                [gui.Button('Ok')], [gui.Button('Cancel')]    
-                ]
+    def on_submit():
+        name = name_entry.get()
+        plot = plot_entry.get()
+        phone = plot_entry.get()
+        room = room_entry.get()
+        rent = rent_entry.get()
+        startdate = start_entry.get()
+        enddate = end_entry.get()
+
+        conn = sqlite3.connect("database1")
+        cur = conn.cursor()
+
+        cur.execute("CREATE TABLE IF NOT EXISTS tenants(name, plotnumber, phone, roomnumber, rent, startdate, enddate)")
+        conn.commit()
+        cur.execute(f"INSERT INTO tenants VALUES ('{name}', '{plot}', '{phone}', '{room}' , '{rent}', '{startdate}', '{enddate}')")
+        conn.commit()
+
+        root.destroy()
     
-    window = gui.Window("Add tenant", layout)
+    root = Tk()
+    root.title("Add new tenant")
+    mainframe = ttk.Frame(root, padding="3 3 12 12")
+    mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+    root.columnconfigure(0, weight=1)
+    root.rowconfigure(0, weight=1)
 
-    while True:
-        event, values = window.read()
-        if event == gui.WIN_CLOSED or event == "Cancel" or event == "Ok":
-            break
-        
-    name = values[0]
-    plot = values[1]
-    phone = values[2]
-    room = values[3]
-    rent = values[4]
-    startdate = values[4]
-    enddate = values[5]
+    ttk.Label(mainframe, text="Tenant name").grid(column=1, row=1)
+    name_entry = ttk.Entry(mainframe, width=7)
+    name_entry.grid(column=2, row=1)
+    
+    ttk.Label(mainframe, text="Plot number").grid(column=1, row=2)
+    plot_entry = ttk.Entry(mainframe, width=7)
+    plot_entry.grid(column=2, row=2)
 
-    conn = sqlite3.connect("database1")
-    cur = conn.cursor()
+    ttk.Label(mainframe, text="Phone number").grid(column=1, row=3)
+    phone_entry = ttk.Entry(mainframe, width=7)
+    phone_entry.grid(column=2, row=3)
 
-    cur.execute("CREATE TABLE IF NOT EXISTS tenants(name, plotnumber, phone, roomnumber, rent, startdate, enddate)")
-    conn.commit()
-    cur.execute(f"INSERT INTO tenants VALUES ('{name}', '{plot}', '{phone}', '{room}' , '{rent}', '{startdate}', '{enddate}')")
-    conn.commit()
+    ttk.Label(mainframe, text="Room number").grid(column=1, row=4)
+    room_entry = ttk.Entry(mainframe, width=7)
+    room_entry.grid(column=2, row=4)
+
+    ttk.Label(mainframe, text="Rent per month").grid(column=1, row=5)
+    rent_entry = ttk.Entry(mainframe, width=7)
+    rent_entry.grid(column=2, row=5)
+
+    ttk.Label(mainframe, text="Start date").grid(column=1, row=6)
+    start_entry = ttk.Entry(mainframe, width=7)
+    start_entry.grid(column=2, row=6)
+
+    ttk.Label(mainframe, text="End date").grid(column=1, row=7)
+    end_entry = ttk.Entry(mainframe, width=7)
+    end_entry.grid(column=2, row=7)
+
+    ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=8)
+    ttk.Button(mainframe, text="Submit", command=on_submit).grid(column=2, row=8)
+
 
 
 main()
