@@ -17,14 +17,16 @@ def main():
     #option_entry.grid(column=2, row=1, sticky=(W, E))
     ttk.Label(mainframe, text="What would you like to do?").grid(column=2, row=1, sticky=E)
     ttk.Button(mainframe, text="Add tenant", command=addtenant).grid(column=2, row=2)
-    ttk.Button(mainframe, text="View current tenants").grid(column=2, row=3)
+    ttk.Button(mainframe, text="View current tenants", command=tenantlist).grid(column=2, row=3)
     ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=4)
 
     root.mainloop()
 
 
 def tenantlist():
-    ...
+    
+    
+    
     
 def addtenant():
 
