@@ -3,8 +3,12 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk
 
+import sv_ttk
+
+root = Tk()
+
 def main():
-    root = Tk()
+    sv_ttk.set_theme("dark")
     root.title("Choose an option")
 
     mainframe = ttk.Frame(root, padding="3 3 12 12")
@@ -29,13 +33,14 @@ def tenantlist():
     response = cur.execute("SELECT * FROM TENANTS")
     tenants = response.fetchall()
 
-    root = Tk()
-    root.title("Tenant list")
+    top = Toplevel(root)
+    sv_ttk.set_theme("dark")
+    top.title("Tenant list")
 
-    mainframe = ttk.Frame(root, padding="3 3 12 12")
+    mainframe = ttk.Frame(top, padding="3 3 12 12")
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-    root.columnconfigure(0, weight=1)
-    root.rowconfigure(0, weight=1)
+    top.columnconfigure(0, weight=1)
+    top.rowconfigure(0, weight=1)
 
     ttk.Label(mainframe, text="Here is the following list of tenants").grid(column=1, row=1)
 
@@ -73,12 +78,13 @@ def addtenant():
 
         root.destroy()
     
-    root = Tk()
-    root.title("Add new tenant")
-    mainframe = ttk.Frame(root, padding="3 3 12 12")
+    top = Toplevel(root)
+    sv_ttk.set_theme("dark")
+    top.title("Add new tenant")
+    mainframe = ttk.Frame(top, padding="3 3 12 12")
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-    root.columnconfigure(0, weight=1)
-    root.rowconfigure(0, weight=1)
+    top.columnconfigure(0, weight=1)
+    top.rowconfigure(0, weight=1)
 
     ttk.Label(mainframe, text="Tenant name").grid(column=1, row=1)
     name_entry = ttk.Entry(mainframe, width=7)
