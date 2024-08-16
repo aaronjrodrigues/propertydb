@@ -27,11 +27,31 @@ def tenantlist():
     conn = sqlite3.connect("database1")
     cur = conn.cursor()
     response = cur.execute("SELECT * FROM TENANTS")
-    print(response.fetchall())
+    tenants = response.fetchall()
+
+    root = Tk()
+    root.title("Tenant list")
+
+    mainframe = ttk.Frame(root, padding="3 3 12 12")
+    mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+    root.columnconfigure(0, weight=1)
+    root.rowconfigure(0, weight=1)
+
+    ttk.Label(mainframe, text="Here is the following list of tenants").grid(column=1, row=1)
+
+    row = 2
+
+    for x in tenants:
+        ttk.Label(mainframe, text=f"{str(x)}").grid(column=1, row=row)
+        print(x)
+        row = row + 1
+        print(row)
+
+    ttk.Label(mainframe, text=f"There are currently {len(tenants)} tenants").grid(column=1, row=row)
+    row = row + 1
 
     
-    
-    
+
 def addtenant():
 
     def on_submit():
