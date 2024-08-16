@@ -2,9 +2,12 @@ import sqlite3
 
 from tkinter import *
 from tkinter import ttk
+import sv_ttk
+
+root = Tk()
+sv_ttk.set_theme("dark")
 
 def main():
-    root = Tk()
     root.title("Choose an option")
     mainframe = ttk.Frame(root, padding="3 3 12 12")
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -19,6 +22,8 @@ def main():
     ttk.Button(mainframe, text="View current tenants", command=tenantlist).grid(column=2, row=3)
     ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=4)
 
+    
+
     root.mainloop()
 
 
@@ -28,17 +33,18 @@ def tenantlist():
     response = cur.execute("SELECT * FROM TENANTS")
     tenants = response.fetchall()
 
-    root = Tk()
-    root.title("Tenant list")
+    top = Toplevel(root)
+    sv_ttk.set_theme("dark")
+    top.title("Tenant list")
 
-    mainframe = ttk.Frame(root, padding="3 3 12 12")
+    mainframe = ttk.Frame(top, padding="3 3 12 12")
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-    root.columnconfigure(0, weight=1)
-    root.rowconfigure(0, weight=1)
+    top.columnconfigure(0, weight=1)
+    top.rowconfigure(0, weight=1)
 
-    ttk.Label(mainframe, text="Here is the following list of tenants").grid(column=1, row=1)
+    ttk.Label(mainframe, text="Here is the following list of tenants\n").grid(column=1, row=1)
 
-    row = 2
+    row = 3
 
     for x in tenants:
         ttk.Label(mainframe, text=f"{str(x)}").grid(column=1, row=row)
@@ -46,8 +52,9 @@ def tenantlist():
         row = row + 1
         print(row)
 
-    ttk.Label(mainframe, text=f"There are currently {len(tenants)} tenants").grid(column=1, row=row)
+    ttk.Label(mainframe, text=f"\nThere are currently {len(tenants)} tenants").grid(column=1, row=row)
     row = row + 1
+    
 
     
 
@@ -72,12 +79,13 @@ def addtenant():
 
         root.destroy()
     
-    root = Tk()
-    root.title("Add new tenant")
-    mainframe = ttk.Frame(root, padding="3 3 12 12")
+    top = Toplevel(root)
+    sv_ttk.set_theme("dark")
+    top.title("Add new tenant")
+    mainframe = ttk.Frame(top, padding="3 3 12 12")
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-    root.columnconfigure(0, weight=1)
-    root.rowconfigure(0, weight=1)
+    top.columnconfigure(0, weight=1)
+    top.rowconfigure(0, weight=1)
 
     ttk.Label(mainframe, text="Tenant name").grid(column=1, row=1)
     name_entry = ttk.Entry(mainframe, width=7)
@@ -109,6 +117,7 @@ def addtenant():
 
     ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=8)
     ttk.Button(mainframe, text="Submit", command=on_submit).grid(column=2, row=8)
+
 
 
 
