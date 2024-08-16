@@ -25,6 +25,9 @@ def main():
 
 def tenantlist():
     conn = sqlite3.connect("database1")
+    cur = conn.cursor()
+    response = cur.execute("SELECT * FROM TENANTS")
+    print(response.fetchall())
 
     
     
