@@ -42,17 +42,17 @@ def tenantlist():
     top.columnconfigure(0, weight=1)
     top.rowconfigure(0, weight=1)
 
-    ttk.Label(mainframe, text="Here is the following list of tenants").grid(column=1, row=1)
+    ttk.Label(mainframe, text="Here is the following list of tenants\n").grid(column=1, row=1)
 
-    row = 2
-
+    ttk.Label(mainframe, text="Name, Plot number, Phone number, Room number, Rent, Start date, End date\n").grid(column=1, row=2)
+    row = 3
     for x in tenants:
         ttk.Label(mainframe, text=f"{str(x)}").grid(column=1, row=row)
         print(x)
         row = row + 1
         print(row)
 
-    ttk.Label(mainframe, text=f"There are currently {len(tenants)} tenants").grid(column=1, row=row)
+    ttk.Label(mainframe, text=f"\nThere are currently {len(tenants)} tenants").grid(column=1, row=row)
     row = row + 1
 
 
