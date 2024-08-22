@@ -70,8 +70,6 @@ def addpayment():
     id_entry = ttk.Entry(mainframe, width=7)
     id_entry.grid(column=2, row=5)
 
-    print(type(id_entry))
-
     ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=6)
     ttk.Button(mainframe, text="Submit", command=on_submit).grid(column=2, row=6) 
 
