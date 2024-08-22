@@ -28,11 +28,52 @@ def main():
     root.mainloop()
 
 def addpayment():
-    conn = sqlite3.connect("database1")
-    cur = conn.cursor
-    cur.execute("CREATE TABLE IF NOT EXISTS payments(name, paymentdate, amount)")
 
-    
+    def on_submit():
+        
+        name = name_entry.get()
+        paymentdate = paymentdate_entry.get()
+        amount = amount_entry.get()
+        id = id_entry.get()
+
+        conn = sqlite3.connect("database1")
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS payments(name, paymentdate, amount, id)")
+        conn.commit()
+        cur.execute(f"INSERT INTO payments VALUES ('{name}', '{paymentdate}', '{amount}', '{id}')")
+        conn.commit()
+        top.destroy()
+
+    top = Toplevel(root)
+    sv_ttk.set_theme("dark")
+    top.title("Add a payment")
+    mainframe = ttk.Frame(top, padding="3 3 12 12")
+    mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+    top.columnconfigure(0, weight=1)
+    top.columnconfigure(0, weight=1)
+
+    ttk.Label(mainframe, text="Please enter the following details: ").grid(column=1, row=1)
+
+    ttk.Label(mainframe, text="Name").grid(column=1, row=2)
+    name_entry = ttk.Entry(mainframe, width=7)
+    name_entry.grid(column=2, row=2)
+
+    ttk.Label(mainframe, text="Payment date").grid(column=1, row=3)
+    paymentdate_entry = ttk.Entry(mainframe, width=7)
+    paymentdate_entry.grid(column=2, row=3)
+
+    ttk.Label(mainframe, text="Payment amount").grid(column=1, row=4)
+    amount_entry = ttk.Entry(mainframe, width=7)
+    amount_entry.grid(column=2, row=4)
+
+    ttk.Label(mainframe, text="Omang/Passport number").grid(column=1, row=5)
+    id_entry = ttk.Entry(mainframe, width=7)
+    id_entry.grid(column=2, row=5)
+
+    print(type(id_entry))
+
+    ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=6)
+    ttk.Button(mainframe, text="Submit", command=on_submit).grid(column=2, row=6) 
 
 
 def tenantlist():
@@ -74,11 +115,6 @@ def tenantlist():
         ttk.Button(mainframe1, text="Okay", command=error.destroy).grid(column=1, row=2)    
         ttk.Button(mainframe1, text="Exit", command=exit).grid(column=2, row=2)
 
-
-
-
-
-
 def addtenant():
 
     def on_submit():
@@ -99,7 +135,7 @@ def addtenant():
         cur.execute(f"INSERT INTO tenants VALUES ('{name}', '{id}', '{plot}', '{phone}', '{room}' , '{rent}', '{startdate}', '{enddate}')")
         conn.commit()
 
-        root.destroy()
+        top.destroy()
     
     top = Toplevel(root)
     sv_ttk.set_theme("dark")
