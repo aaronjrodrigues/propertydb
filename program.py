@@ -16,14 +16,12 @@ def main():
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
 
-    #option = StringVar()
-    #option_entry = ttk.Entry(mainframe, width=7, textvariable=option)
-    #option_entry.grid(column=2, row=1, sticky=(W, E))
     ttk.Label(mainframe, text="What would you like to do?").grid(column=2, row=1, sticky=E)
     ttk.Button(mainframe, text="Add tenant", command=addtenant).grid(column=2, row=2)
     ttk.Button(mainframe, text="View current tenants", command=tenantlist).grid(column=2, row=3)
     ttk.Button(mainframe, text="Add a new payment",command=addpayment).grid(column=2, row=4)
-    ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=5)
+    ttk.Button(mainframe, text="View payments", command=viewpayments).grid(column=2, row=5)
+    ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=6)
 
     root.mainloop()
 
@@ -71,7 +69,43 @@ def addpayment():
     id_entry.grid(column=2, row=5)
 
     ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=6)
-    ttk.Button(mainframe, text="Submit", command=on_submit).grid(column=2, row=6) 
+    ttk.Button(mainframe, text="Submit", command=on_submit).grid(column=2, row=6)
+
+def viewpayments():
+    conn = sqlite3.connect("database1")
+    cur = conn.cursor()
+
+    try:
+        response = cur.execute("SELECT * FROM PAYMENTS")
+        payments = response.fetchall()
+
+        top = Toplevel(root)
+        sv_ttk.set_theme("dark")
+        top.title("Payment list")
+        mainframe = ttk.Frame(top, padding="3 3 12 12")
+        mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+        top.columnconfigure(0, weight=1)
+        top.rowconfigure(0, weight=1)
+
+        ttk.Label(mainframe, text="Here is the following list of payments\n").grid(column=1, row=1)
+
+        ttk.Label(mainframe, text="Name, Payment Date, Amount, ID")
+
+        row = 3
+
+        for x in payments:
+            ttk.Label(mainframe, text=f"{x[0]} {x[1]} {x[2]} {x[3]} hello").grid(column=1, row=row)
+            row = row + 1
+    except sqlite3.OperationalError:
+        error = Toplevel(root)
+        sv_ttk.set_theme("dark")
+        error.title("Database is empty")
+        mainframe1 = ttk.Frame(error, padding="3 3 12 12")
+        mainframe1.grid(column=0, row=0, sticky=(N, W, E, S))
+        ttk.Label(mainframe1, text="ERROR: No payments found, please add a payment\n").grid(column=1, row=1)
+        ttk.Button(mainframe1, text="Okay", command=error.destroy).grid(column=1, row=2)    
+        ttk.Button(mainframe1, text="Exit", command=exit).grid(column=2, row=2)
+
 
 
 def tenantlist():
@@ -95,7 +129,10 @@ def tenantlist():
         ttk.Label(mainframe, text="Name, Omang/Passport, Plot number, Phone number, Room number, Rent, Start date, End date\n").grid(column=1, row=2)
         row = 3
         for x in tenants:
-            ttk.Label(mainframe, text=f"{str(x)}").grid(column=1, row=row)
+            print(type(x))
+            print(x[1])
+            #ttk.Label(mainframe, text=f"{str(x)}").grid(column=1, row=row)
+            ttk.Label(mainframe, text=f"{x[1]} {x[2]} {x[3]} {x[4]} {x[5]} {x[6]} {x[7]} hello").grid(column=1, row=row)
             print(x)
             row = row + 1
             print(row)
