@@ -106,50 +106,6 @@ def viewpayments():
         ttk.Button(mainframe1, text="Okay", command=error.destroy).grid(column=1, row=2)    
         ttk.Button(mainframe1, text="Exit", command=exit).grid(column=2, row=2)
 
-
-
-def tenantlist():
-    conn = sqlite3.connect("database1")
-    cur = conn.cursor()
-    try:
-        response = cur.execute("SELECT * FROM TENANTS")
-        
-        tenants = response.fetchall()
-
-        top = Toplevel(root)
-        sv_ttk.set_theme("dark")
-        top.title("Tenant list")
-        mainframe = ttk.Frame(top, padding="3 3 12 12")
-        mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-        top.columnconfigure(0, weight=1)
-        top.rowconfigure(0, weight=1)
-
-        ttk.Label(mainframe, text="Here is the following list of tenants\n").grid(column=1, row=1)
-
-        ttk.Label(mainframe, text="Name, Omang/Passport, Plot number, Phone number, Room number, Rent, Start date, End date\n").grid(column=1, row=2)
-        row = 3
-        for x in tenants:
-            print(type(x))
-            print(x[1])
-            #ttk.Label(mainframe, text=f"{str(x)}").grid(column=1, row=row)
-            ttk.Label(mainframe, text=f"{x[1]} {x[2]} {x[3]} {x[4]} {x[5]} {x[6]} {x[7]} hello").grid(column=1, row=row)
-            print(x)
-            row = row + 1
-            print(row)
-
-        ttk.Label(mainframe, text=f"\nThere are currently {len(tenants)} tenants").grid(column=1, row=row)
-        row = row + 1
-
-    except sqlite3.OperationalError:
-        error = Toplevel(root)
-        sv_ttk.set_theme("dark")
-        error.title("Database is empty")
-        mainframe1 = ttk.Frame(error, padding="3 3 12 12")
-        mainframe1.grid(column=0, row=0, sticky=(N, W, E, S))
-        ttk.Label(mainframe1, text="ERROR: No tenant found, please add a new tenant\n").grid(column=1, row=1)
-        ttk.Button(mainframe1, text="Okay", command=error.destroy).grid(column=1, row=2)    
-        ttk.Button(mainframe1, text="Exit", command=exit).grid(column=2, row=2)
-
 def addtenant():
 
     def on_submit():
@@ -215,6 +171,50 @@ def addtenant():
     ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=9)
     ttk.Button(mainframe, text="Submit", command=on_submit).grid(column=2, row=9)
 
+def tenantlist():
+    conn = sqlite3.connect("database1")
+    cur = conn.cursor()
+    try:
+        response = cur.execute("SELECT * FROM TENANTS")
+        
+        tenants = response.fetchall()
+
+        top = Toplevel(root)
+        sv_ttk.set_theme("dark")
+        top.title("Tenant list")
+        mainframe = ttk.Frame(top, padding="3 3 12 12")
+        mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+        top.columnconfigure(0, weight=1)
+        top.rowconfigure(0, weight=1)
+
+        ttk.Label(mainframe, text="Here is the following list of tenants\n").grid(column=1, row=1)
+
+        ttk.Label(mainframe, text="Name, Omang/Passport, Plot number, Phone number, Room number, Rent, Start date, End date\n").grid(column=1, row=2)
+        row = 3
+        for x in tenants:
+            print(type(x))
+            print(x[1])
+            #ttk.Label(mainframe, text=f"{str(x)}").grid(column=1, row=row)
+            ttk.Label(mainframe, text=f"{x[1]} {x[2]} {x[3]} {x[4]} {x[5]} {x[6]} {x[7]} hello").grid(column=1, row=row)
+            print(x)
+            row = row + 1
+            print(row)
+
+        ttk.Label(mainframe, text=f"\nThere are currently {len(tenants)} tenants").grid(column=1, row=row)
+        row = row + 1
+
+    except sqlite3.OperationalError:
+        error = Toplevel(root)
+        sv_ttk.set_theme("dark")
+        error.title("Database is empty")
+        mainframe1 = ttk.Frame(error, padding="3 3 12 12")
+        mainframe1.grid(column=0, row=0, sticky=(N, W, E, S))
+        ttk.Label(mainframe1, text="ERROR: No tenant found, please add a new tenant\n").grid(column=1, row=1)
+        ttk.Button(mainframe1, text="Okay", command=error.destroy).grid(column=1, row=2)    
+        ttk.Button(mainframe1, text="Exit", command=exit).grid(column=2, row=2)
+
+def improvedtenantlist():
+    ...
 
 
 main()
