@@ -21,7 +21,8 @@ def main():
     ttk.Button(mainframe, text="View current tenants", command=tenantlist).grid(column=2, row=3)
     ttk.Button(mainframe, text="Add a new payment",command=addpayment).grid(column=2, row=4)
     ttk.Button(mainframe, text="View payments", command=viewpayments).grid(column=2, row=5)
-    ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=6)
+    ttk.Button(mainframe, text="Improved tenants view", command=improvedtenantlist).grid(column=2, row=6)
+    ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=7)
 
     root.mainloop()
 
@@ -110,9 +111,9 @@ def addtenant():
 
     def on_submit():
         name = name_entry.get()
-        id = name_entry.get()
+        id = id_entry.get()
         plot = plot_entry.get()
-        phone = plot_entry.get()
+        phone = phone_entry.get()
         room = room_entry.get()
         rent = rent_entry.get()
         startdate = start_entry.get()
@@ -141,8 +142,8 @@ def addtenant():
     name_entry.grid(column=2, row=1)
 
     ttk.Label(mainframe, text="Omang/Passport number").grid(column=1, row=2)
-    name_entry = ttk.Entry(mainframe, width=7)
-    name_entry.grid(column=2, row=2)
+    id_entry = ttk.Entry(mainframe, width=7)
+    id_entry.grid(column=2, row=2)
     
     ttk.Label(mainframe, text="Plot number").grid(column=1, row=3)
     plot_entry = ttk.Entry(mainframe, width=7)
@@ -214,7 +215,52 @@ def tenantlist():
         ttk.Button(mainframe1, text="Exit", command=exit).grid(column=2, row=2)
 
 def improvedtenantlist():
-    ...
+    top = Toplevel(root)
+    top.title("Improved tenant list")
+    top.geometry('500x500')
+    top['bg'] = '#AC99F2'
+
+    conn = sqlite3.connect("database1")
+    cur = conn.cursor()
+
+    tenant_table = Frame(top)
+    tenant_table.pack()
+
+    table = ttk.Treeview(tenant_table)
+
+    table['columns'] = ('name', 'id', 'plotnumber', 'phone', 'roomnumber', 'rent', 'startdate', 'enddate')
+    table.column("#0", width=0,  stretch=NO)
+    table.column("name",anchor=CENTER, width=80)
+    table.column("id",anchor=CENTER, width=80)
+    table.column("plotnumber",anchor=CENTER, width=80)
+    table.column("phone",anchor=CENTER, width=80)
+    table.column("roomnumber",anchor=CENTER, width=80)
+    table.column("rent",anchor=CENTER, width=80)
+    table.column("startdate",anchor=CENTER, width=80)
+    table.column("enddate",anchor=CENTER, width=80)
+
+    table.heading("#0",text="",anchor=CENTER)
+    table.heading("name",text="Name",anchor=CENTER)
+    table.heading("id",text="ID",anchor=CENTER)
+    table.heading("plotnumber",text="Plot Number",anchor=CENTER)
+    table.heading("phone",text="Phone number",anchor=CENTER)
+    table.heading("roomnumber",text="Room number",anchor=CENTER)
+    table.heading("rent",text="Rent",anchor=CENTER)
+    table.heading("startdate",text="Start date",anchor=CENTER)
+    table.heading("enddate",text="End date",anchor=CENTER)
+
+    table.insert(parent='',index='end',iid=0,text='', values=('1','Ninja','101','Oklahoma', 'Moore', '1', '8', '2'))
+    
+    response = cur.execute("SELECT * FROM TENANTS")
+    tenants = response.fetchall()
+
+    counter = 1
+    for x in tenants:
+        table.insert(parent='',index='end',iid=counter,text='', values=(f'{x[0]}',f'{x[1]}',f'{x[2]}',f'{x[3]}', f'{x[4]}', f'{x[5]}', f'{x[6]}', f'{x[7]}'))
+        counter = counter + 1
+
+    table.pack()
+    top.mainloop()
 
 
 main()
