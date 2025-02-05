@@ -3,12 +3,12 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk
 
-import sv_ttk
+#import sv_ttk
 
 root = Tk()
 
 def main():
-    sv_ttk.set_theme("dark")
+    #sv_ttk.set_theme("dark")
     root.title("Choose an option")
 
     mainframe = ttk.Frame(root, padding="3 3 12 12")
@@ -44,7 +44,7 @@ def addpayment():
         top.destroy()
 
     top = Toplevel(root)
-    sv_ttk.set_theme("dark")
+    #sv_ttk.set_theme("dark")
     top.title("Add a payment")
     mainframe = ttk.Frame(top, padding="3 3 12 12")
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -81,7 +81,7 @@ def viewpayments():
         payments = response.fetchall()
 
         top = Toplevel(root)
-        sv_ttk.set_theme("dark")
+        #sv_ttk.set_theme("dark")
         top.title("Payment list")
         mainframe = ttk.Frame(top, padding="3 3 12 12")
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -95,11 +95,11 @@ def viewpayments():
         row = 3
 
         for x in payments:
-            ttk.Label(mainframe, text=f"{x[0]} {x[1]} {x[2]} {x[3]} hello").grid(column=1, row=row)
+            ttk.Label(mainframe, text=f"{x[0]} {x[1]} {x[2]} {x[3]}").grid(column=1, row=row)
             row = row + 1
     except sqlite3.OperationalError:
         error = Toplevel(root)
-        sv_ttk.set_theme("dark")
+        #sv_ttk.set_theme("dark")
         error.title("Database is empty")
         mainframe1 = ttk.Frame(error, padding="3 3 12 12")
         mainframe1.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -130,7 +130,7 @@ def addtenant():
         top.destroy()
     
     top = Toplevel(root)
-    sv_ttk.set_theme("dark")
+    #sv_ttk.set_theme("dark")
     top.title("Add new tenant")
     mainframe = ttk.Frame(top, padding="3 3 12 12")
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -181,7 +181,7 @@ def tenantlist():
         tenants = response.fetchall()
 
         top = Toplevel(root)
-        sv_ttk.set_theme("dark")
+        #sv_ttk.set_theme("dark")
         top.title("Tenant list")
         mainframe = ttk.Frame(top, padding="3 3 12 12")
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -196,7 +196,7 @@ def tenantlist():
             print(type(x))
             print(x[1])
             #ttk.Label(mainframe, text=f"{str(x)}").grid(column=1, row=row)
-            ttk.Label(mainframe, text=f"{x[1]} {x[2]} {x[3]} {x[4]} {x[5]} {x[6]} {x[7]} hello").grid(column=1, row=row)
+            ttk.Label(mainframe, text=f"{x[1]} {x[2]} {x[3]} {x[4]} {x[5]} {x[6]} {x[7]}").grid(column=1, row=row)
             print(x)
             row = row + 1
             print(row)
@@ -206,7 +206,7 @@ def tenantlist():
 
     except sqlite3.OperationalError:
         error = Toplevel(root)
-        sv_ttk.set_theme("dark")
+        #sv_ttk.set_theme("dark")
         error.title("Database is empty")
         mainframe1 = ttk.Frame(error, padding="3 3 12 12")
         mainframe1.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -217,8 +217,8 @@ def tenantlist():
 def improvedtenantlist():
     top = Toplevel(root)
     top.title("Improved tenant list")
-    top.geometry('500x500')
-    top['bg'] = '#AC99F2'
+    top.geometry('750x750')
+    #top['bg'] = '#AC99F2'
 
     conn = sqlite3.connect("database1")
     cur = conn.cursor()
@@ -249,7 +249,7 @@ def improvedtenantlist():
     table.heading("startdate",text="Start date",anchor=CENTER)
     table.heading("enddate",text="End date",anchor=CENTER)
 
-    table.insert(parent='',index='end',iid=0,text='', values=('1','Ninja','101','Oklahoma', 'Moore', '1', '8', '2'))
+    #table.insert(parent='',index='end',iid=0,text='', values=('1','Ninja','101','Oklahoma', 'Moore', '1', '8', '2'))
     
     response = cur.execute("SELECT * FROM TENANTS")
     tenants = response.fetchall()
