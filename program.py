@@ -20,7 +20,7 @@ def main():
     ttk.Button(mainframe, text="Add tenant", command=addtenant).grid(column=2, row=2)
     #ttk.Button(mainframe, text="View current tenants", command=tenantlist).grid(column=2, row=3)
     ttk.Button(mainframe, text="Add a new payment",command=addpayment).grid(column=2, row=4)
-    ttk.Button(mainframe, text="View payments", command=viewpayments).grid(column=2, row=5)
+    ttk.Button(mainframe, text="View payments", command=improvedpaymentview).grid(column=2, row=5)
     ttk.Button(mainframe, text="View current tenants", command=improvedtenantlist).grid(column=2, row=6)
     ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=7)
 
@@ -93,10 +93,16 @@ def viewpayments():
         ttk.Label(mainframe, text="Name, Payment Date, Amount, ID")
 
         row = 3
+        monthpaymenttotal = 0
 
         for x in payments:
             ttk.Label(mainframe, text=f"{x[0]} {x[1]} {x[2]} {x[3]}").grid(column=1, row=row)
+            monthpaymenttotal = monthpaymenttotal + int(x[3])
             row = row + 1
+        
+        ttk.Label(mainframe, text=f"Total revenue is {monthpaymenttotal}").grid(column=1, row=(row+1))
+
+        
     except sqlite3.OperationalError:
         error = Toplevel(root)
         #sv_ttk.set_theme("dark")
@@ -257,6 +263,43 @@ def improvedtenantlist():
     counter = 1
     for x in tenants:
         table.insert(parent='',index='end',iid=counter,text='', values=(f'{x[0]}',f'{x[1]}',f'{x[2]}',f'{x[3]}', f'{x[4]}', f'{x[5]}', f'{x[6]}', f'{x[7]}'))
+        counter = counter + 1
+
+    table.pack()
+    top.mainloop()
+
+def improvedpaymentview():
+    top = Toplevel(root)
+    top.title("Improved payment view")
+    top.geometry('750x750')
+    conn = sqlite3.connect("database1")
+    cur = conn.cursor()
+
+    payment_table = Frame(top)
+    payment_table.pack()
+
+    table = ttk.Treeview(payment_table)
+
+    response = cur.execute("SELECT * FROM PAYMENTS")
+    payments = response.fetchall()
+
+    table['columns'] = ('name', 'payment date', 'amount', 'id')
+    table.column("#0", width=0,  stretch=NO)
+    table.column("name",anchor=CENTER, width=80)
+    table.column("payment date",anchor=CENTER, width=80)
+    table.column("amount",anchor=CENTER, width=80)
+    table.column("id",anchor=CENTER, width=80)
+
+    table.heading("#0",text="",anchor=CENTER)
+    table.heading("name",text="Name",anchor=CENTER)
+    table.heading("payment date",text="ID",anchor=CENTER)
+    table.heading("amount",text="Plot Number",anchor=CENTER)
+    table.heading("id",text="Phone number",anchor=CENTER)
+
+
+    counter = 1
+    for x in payments:
+        table.insert(parent='',index='end', iid=counter,text='', values=(f'{x[0]}',f'{x[1]}',f'{x[2]}',f'{x[3]}'))
         counter = counter + 1
 
     table.pack()
