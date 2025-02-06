@@ -18,10 +18,10 @@ def main():
 
     ttk.Label(mainframe, text="What would you like to do?").grid(column=2, row=1, sticky=E)
     ttk.Button(mainframe, text="Add tenant", command=addtenant).grid(column=2, row=2)
-    ttk.Button(mainframe, text="View current tenants", command=tenantlist).grid(column=2, row=3)
+    #ttk.Button(mainframe, text="View current tenants", command=tenantlist).grid(column=2, row=3)
     ttk.Button(mainframe, text="Add a new payment",command=addpayment).grid(column=2, row=4)
     ttk.Button(mainframe, text="View payments", command=viewpayments).grid(column=2, row=5)
-    ttk.Button(mainframe, text="Improved tenants view", command=improvedtenantlist).grid(column=2, row=6)
+    ttk.Button(mainframe, text="View current tenants", command=improvedtenantlist).grid(column=2, row=6)
     ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=7)
 
     root.mainloop()
