@@ -70,7 +70,7 @@ def addpayment():
     id_entry = ttk.Entry(mainframe, width=7)
     id_entry.grid(column=2, row=5)
 
-    ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=6)
+    ttk.Button(mainframe, text="Exit", command=top.destroy).grid(column=1, row=6)
     ttk.Button(mainframe, text="Submit", command=on_submit).grid(column=2, row=6)
 
 def viewpayments():
@@ -316,7 +316,17 @@ def settings():
 
     ttk.Label(mainframe, text="What would you like to do?").grid(column=1, row=1)
     ttk.Button(mainframe, text="Clear current database").grid(column=1, row=2)
-    ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=3)
+    ttk.Button(mainframe, text="Exit", command=top.destroy).grid(column=1, row=3)
+
+def cleardb():
+    warn = Toplevel(root)
+    #sv_ttk.set_theme("dark")
+    warn.title("WARNING")
+    mainframe1 = ttk.Frame(warn, padding="3 3 12 12")
+    mainframe1.grid(column=0, row=0, sticky=(N, W, E, S))
+    ttk.Label(mainframe1, text="WARNING: ARE YOU SURE YOU WANT TO DELETE THE DATABASE, ALL CONTENTS WILL BE LOST\n").grid(column=1, row=1)
+    ttk.Button(mainframe1, text="Okay", command=warn.destroy).grid(column=1, row=2)    
+    ttk.Button(mainframe1, text="Exit", command=exit).grid(column=2, row=2)
 
 main()
     
