@@ -22,7 +22,8 @@ def main():
     ttk.Button(mainframe, text="Add a new payment",command=addpayment).grid(column=2, row=4)
     ttk.Button(mainframe, text="View payments", command=improvedpaymentview).grid(column=2, row=5)
     ttk.Button(mainframe, text="View current tenants", command=improvedtenantlist).grid(column=2, row=6)
-    ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=7)
+    ttk.Button(mainframe, text="Settings", command=settings).grid(column=2, row=7)
+    ttk.Button(mainframe, text="Exit", command=quit).grid(column=2, row=8)
 
     root.mainloop()
 
@@ -305,6 +306,17 @@ def improvedpaymentview():
     table.pack()
     top.mainloop()
 
+def settings():
+    top = Toplevel(root)
+    top.title("Add a payment")
+    mainframe = ttk.Frame(top, padding="3 3 12 12")
+    mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+    top.columnconfigure(0, weight=1)
+    top.columnconfigure(0, weight=1)
+
+    ttk.Label(mainframe, text="What would you like to do?").grid(column=1, row=1)
+    ttk.Button(mainframe, text="Clear current database").grid(column=1, row=2)
+    ttk.Button(mainframe, text="Exit", command=exit).grid(column=1, row=3)
 
 main()
     
